@@ -2,9 +2,7 @@ from flask import Flask, request, Response
 from dotenv import load_dotenv, dotenv_values
 import os
 
-RUNNING_USER = os.getenv('USER')
-
-ROOT_DIR = f"/home/{RUNNING_USER}/recon"
+ROOT_DIR = f"./recon"
 RECON_TARGETS_FILE_PATH = ROOT_DIR + "/" + "targets.txt"
 DOMAINS_DIR_PATH = ROOT_DIR + "/" + "domains"
 
