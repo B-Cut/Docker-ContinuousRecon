@@ -5,11 +5,9 @@
 source "../.env"
 
 DOMAIN=$1
-OUTPUT_DIR="$HOME/recon/$DOMAIN"
+OUTPUT_DIR="/recon/$DOMAIN"
 WORDLISTS_DIR="$HOME/wordlists"
 TELEGRAM_NOTIFICATION_URL="https://api.telegram.org/bot$TELEGRAM_API_TOKEN/sendMessage"
-
-
 
 RAFT_LARGE_WORDLIST = "$WORDLISTS_DIR/raft-larghttps://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Discovery/Web-Content/raft-large-words.txte-words.txt"
 
