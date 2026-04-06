@@ -1,0 +1,2 @@
+* 0-23/8 * * * /src/scripts/start_quick_recon.sh >> /src/cron_log
+* 3 * * * * /src/scripts/start_full_recon.sh >> /src/cron_log
