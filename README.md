@@ -12,7 +12,7 @@ Interaction with the container occurs via the embedded flask server `C2C.py`. En
 - `/run_quick_recon`: Execute quick subdomain enumeration on all domains
 
 Required environment variables:
-- SECRET_KEY: Authenticate request to C2C server
+- SECRET_KEY: Authenticate requests to C2C server
 - TELEGRAM_API_TOKEN: Telegram bot API token, required for sending notifications via telegram
 - TELEGRAM_CHAT_ID: ID for the chat to which send messages, required for sending notifications via telegram 
 
