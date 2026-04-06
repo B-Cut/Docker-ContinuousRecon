@@ -20,20 +20,20 @@ curl -s "https://crt.sh/?q=%.${DOMAIN}&output=json" | jq -r '.[].name_value' | s
 wait
  
 # Merge and deduplicate
-cat "$OUTPUT_DIR/subs/"*.txt | sort -u > "$OUTPUT_DIR/subs/all_subs.txt"
+cat "$OUTPUT_DIR/subs/"*.txt | sort -u > "$OUTPUT_DIR/subs/quick_all_subs.txt"
 wc -l "$OUTPUT_DIR/subs/all_subs.txt"
 
 # Compare the quick subdomain list to yesterday's
 comm -23 \
-  <(sort "$OUTPUT_DIR/subs/live_subs.txt") \
+  <(sort "$OUTPUT_DIR/subs/quick_all_subs.txt") \
   <(sort "$OUTPUT_DIR/subs/live_subs_yesterday.txt") \
-  > "$OUTPUT_DIR/new_subs_today.txt"
+  > "$OUTPUT_DIR/quick_new_subs_today.txt"
  
-if [ -s "$OUTPUT_DIR/new_subs_today.txt" ]; then
+if [ -s "$OUTPUT_DIR/quick_new_subs_today.txt" ]; then
   # Notify via Slack webhook
-  NEW_COUNT=$(wc -l < "$OUTPUT_DIR/new_subs_today.txt")
-  NEW_SUBS=$(cat "$OUTPUT_DIR/new_subs_today.txt" | head -10 | tr '\n' ', ')
+  NEW_COUNT=$(wc -l < "$OUTPUT_DIR/quick_new_subs_today.txt")
+  NEW_SUBS=$(cat "$OUTPUT_DIR/quick_new_subs_today.txt" | head -10 | tr '\n' ', ')
   curl -s -X POST "$TELEGRAM_NOTIFICATION_URL" \
     -H "Content-Type: application/json" \
-    -d "{\"chat_id\": \"$TELEGRAM_CHAT_ID\", \"text\": \"[$DOMAIN] $NEW_COUNT new subdomains: $NEW_SUBS\"}"
+    -d "{\"chat_id\": \"$TELEGRAM_CHAT_ID\", \"text\": \"[$DOMAIN] $NEW_COUNT new subdomains (Quick Scan): $NEW_SUBS\"}"
 fi
