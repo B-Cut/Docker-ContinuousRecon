@@ -67,7 +67,7 @@ def run_full_recon():
     
     return "Initiated full chain analysis on all targets!", 200
 
-@app.route("/run_quick_enumeration_on_all", methods=["POST"])
+@app.route("/run_quick_recon", methods=["POST"])
 def run_quick_recon():
     if not check_token(request):
         return "Authentication Error", 401
