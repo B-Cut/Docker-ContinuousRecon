@@ -51,15 +51,6 @@ def remove_target(target_domain):
         
     return "OK", 200
 
-@app.route("/run_chain/<target>", methods=["POST"])
-def run_chain_on_target(target):
-    if not check_token(request):
-        return "Authentication Error", 401
-    
-    with open(RECON_TARGETS_FILE_PATH, "r") as f:
-        for line in f.readlines():
-            if target in line:
-                pass
 
 @app.route("/run_full_recon", methods=["POST"])
 def run_full_recon():
