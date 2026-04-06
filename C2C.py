@@ -30,10 +30,13 @@ def add_target(target_domain):
             if target_domain in line:
                 return "Domain already in targets", 200
         
-        f.write(target_domain)
-        os.mkdir(DOMAINS_DIR_PATH + "/" + target_domain)
+        f.write(target_domain + '\n')
 
-        return "OK", 200
+    domain_dir = DOMAINS_DIR_PATH + "/" + target_domain 
+    if not os.path.exists(domain_dir):
+        os.mkdir(domain_dir)
+
+    return "OK", 200
     
 @app.route("/remove_target/<target_domain>", methods=["POST"])
 def remove_target(target_domain):
