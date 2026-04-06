@@ -11,4 +11,5 @@ RUN chmod -R +x  /src/scripts
 RUN crontab /etc/crontab
 RUN touch /var/log/cron.log
 
-CMD ["cron", "&&", "tail", "-f", "/var/log/cron.log"]
+
+CMD ["crond", "-f"]
