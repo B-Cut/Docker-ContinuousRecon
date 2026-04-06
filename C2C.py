@@ -8,7 +8,7 @@ RECON_TARGETS_FILE_PATH = ROOT_DIR + "/" + "targets.txt"
 DOMAINS_DIR_PATH = ROOT_DIR + "/" + "domains"
 
 def check_token(request):
-    return request.form['secret'] != os.getenv('SECRET_KEY')
+    return request.form['secret'] == os.getenv('SECRET_KEY')
 
 def init_structure():
     if not os.path.exists(ROOT_DIR):

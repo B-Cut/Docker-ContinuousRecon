@@ -10,10 +10,10 @@ BASIC_PIPELINE_SCRIPT_PATH="/recon_scripts/basic_subdomain_enumeration.sh"
 
 case $MODE in
     full)
-        $SCRIPT_TO_USE=$FULL_PIPELINE_SCRIPT_PATH
+        SCRIPT_TO_USE=$FULL_PIPELINE_SCRIPT_PATH
         ;;
     basic)
-        $SCRIPT_TO_USE=$BASIC_PIPELINE_SCRIPT_PATH
+        SCRIPT_TO_USE=$BASIC_PIPELINE_SCRIPT_PATH
         ;;
     help)
         echo "Usage: $0 <full|basic|help> <targets_file_path>"
@@ -26,15 +26,15 @@ case $MODE in
         ;;
 esac
 
-if [[ $# -ne 3 ]]; then
+if [[ $# -ne 2 ]]; then
     echo "Error: 2 arguments expected, $# received"
     echo "Usage: $0 <full|basic|help> <targets_file_path>"
     exit 1
-
-
+fi
 
 touch recon_lock
-while IFS= read -r domain; do
-    /bin/bash $SCRIPT_TO_USE $domain
-done < $TARGETS_FILE_PATH
+while IFS= read -r line; do
+    echo "====================== Scanning $line ============================="
+    /bin/bash $SCRIPT_TO_USE $line
+done < "$TARGETS_FILE_PATH"
 rm recon_lock

@@ -57,10 +57,7 @@ RUN wget \
 COPY ./C2C.py /C2C.py
 COPY ./recon_scripts /recon_scripts
 
-RUN chmod +x -r /recon_scripts
-
-
-
+RUN chmod -R +x /recon_scripts
 
 # TODO: Migrate to proper wsgi server once this is hosted on the internet
-#CMD ["flask","--app", "C2C", "run", "--port=1337"]
+CMD ["flask","--app", "C2C", "run", "--port=1337"]
