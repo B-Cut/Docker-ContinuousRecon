@@ -60,4 +60,4 @@ COPY /recon_scripts /recon_scripts
 RUN chmod -R +x /recon_scripts
 
 # TODO: Migrate to proper wsgi server once this is hosted on the internet
-CMD ["flask","--app", "C2C", "run", "--port=1337"]
+CMD ["flask","--app", "C2C", "run", "--port=1337", "--host", "0.0.0.0"]

@@ -3,7 +3,7 @@ from dotenv import load_dotenv, dotenv_values
 import os
 import subprocess
 
-ROOT_DIR = f"./recon"
+ROOT_DIR = f"/recon"
 RECON_TARGETS_FILE_PATH = ROOT_DIR + "/" + "targets.txt"
 DOMAINS_DIR_PATH = ROOT_DIR + "/" + "domains"
 
@@ -27,14 +27,14 @@ def add_target(target_domain):
 
     with open(RECON_TARGETS_FILE_PATH, "a+") as f:
         for line in f.readlines():
-            if target_domain in line:
+            if target_domain == line.strip():
                 return "Domain already in targets", 200
         
         f.write(target_domain + '\n')
 
     domain_dir = DOMAINS_DIR_PATH + "/" + target_domain 
     if not os.path.exists(domain_dir):
-        os.mkdir(domain_dir)
+        os.makedirs(domain_dir, exist_ok=True)
 
     return "OK", 200
     
