@@ -54,8 +54,8 @@ RUN wget \
 
 # Copy necessary files
 # We don't want the final image to have the .env file once built due to the sensitive nature of it's contents
-COPY ./C2C.py /C2C.py
-COPY ./recon_scripts /recon_scripts
+COPY /C2C.py /C2C.py
+COPY /recon_scripts /recon_scripts
 
 RUN chmod -R +x /recon_scripts
 

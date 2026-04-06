@@ -10,7 +10,6 @@ services:
     env_file:
       - .env
     build:
-      dockerfile: ReconPipeline/Dockerfile
       context: ReconPipeline
 
   scheduler:
@@ -18,9 +17,6 @@ services:
     env_file:
       - .env
     build:
-      dockerfile: Scheduler/Dockerfile
       context: Scheduler
-
-networks:
-  comm:
-    driver: bridge
+    depends_on:
+      - recon

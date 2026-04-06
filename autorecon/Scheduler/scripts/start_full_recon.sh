@@ -1,3 +1,3 @@
 #!/bin/bash
 
-curl -d "secret=$SECRET_KEY" +location.host+:1337/run_full_recon
+curl -d "secret=$SECRET_KEY" recon:1337/run_full_recon
