@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  recon:
+    image: autorecon:recon
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./recon:/recon
+    env_file:
+      - .env
+    build:
+      dockerfile: ReconPipeline/Dockerfile
+      context: ReconPipeline
+
+  scheduler:
+    image: autorecon:scheduler
+    env_file:
+      - .env
+    build:
+      dockerfile: Scheduler/Dockerfile
+      context: Scheduler
+
+networks:
+  comm:
+    driver: bridge
