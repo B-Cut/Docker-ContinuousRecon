@@ -1,0 +1,33 @@
+services:
+  recon:
+    image: autorecon:recon
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./recon:/recon
+    env_file:
+      - .env
+    build:
+      context: ReconPipeline
+    networks:
+      - rcnetw
+
+  scheduler:
+    image: autorecon:scheduler
+    env_file:
+      - .env
+
+    build:
+      context: Scheduler
+
+    networks:
+      - rcnetw
+
+    depends_on:
+      - recon
+
+networks:
+  rcnetw:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"

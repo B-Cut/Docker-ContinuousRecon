@@ -3,7 +3,7 @@ from dotenv import load_dotenv, dotenv_values
 import os
 import subprocess
 
-ROOT_DIR = f"./recon"
+ROOT_DIR = f"/recon"
 RECON_TARGETS_FILE_PATH = ROOT_DIR + "/" + "targets.txt"
 DOMAINS_DIR_PATH = ROOT_DIR + "/" + "domains"
 
@@ -13,7 +13,11 @@ def check_token(request):
 def init_structure():
     if not os.path.exists(ROOT_DIR):
         os.mkdir(ROOT_DIR)
+
+    if not os.path.exists(DOMAINS_DIR_PATH):
         os.mkdir(DOMAINS_DIR_PATH)
+    
+
 
 init_structure()
 load_dotenv()
@@ -25,16 +29,23 @@ def add_target(target_domain):
     if not check_token(request):
         return "Authentication Error", 401
 
-    with open(RECON_TARGETS_FILE_PATH, "a+") as f:
-        for line in f.readlines():
-            if target_domain in line:
-                return "Domain already in targets", 200
+    lines = []
+
+    if not os.path.exists(RECON_TARGETS_FILE_PATH):
+        open(RECON_TARGETS_FILE_PATH, "w").close()
+
+    with open(RECON_TARGETS_FILE_PATH, "r+") as f:
+        lines = f.readlines()
         
+        for line in lines:
+            if target_domain in line:
+                return "Target alredy being monitored", 200
+            
         f.write(target_domain + '\n')
 
     domain_dir = DOMAINS_DIR_PATH + "/" + target_domain 
     if not os.path.exists(domain_dir):
-        os.mkdir(domain_dir)
+        os.makedirs(domain_dir, exist_ok=True)
 
     return "OK", 200
     
