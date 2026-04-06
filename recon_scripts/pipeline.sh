@@ -6,10 +6,10 @@ source "../.env"
 
 DOMAIN=$1
 OUTPUT_DIR="/recon/$DOMAIN"
-WORDLISTS_DIR="$HOME/wordlists"
+WORDLISTS_DIR="/wordlists"
 TELEGRAM_NOTIFICATION_URL="https://api.telegram.org/bot$TELEGRAM_API_TOKEN/sendMessage"
 
-RAFT_LARGE_WORDLIST = "$WORDLISTS_DIR/raft-larghttps://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Discovery/Web-Content/raft-large-words.txte-words.txt"
+RAFT_LARGE_WORDLIST="$WORDLISTS_DIR/raft-large-words.txte-words.txt"
 
 
 mkdir -p "$OUTPUT_DIR/subs"
@@ -29,13 +29,13 @@ cat "$OUTPUT_DIR/subs/"*.txt | sort -u > "$OUTPUT_DIR/subs/all_subs.txt"
 wc -l "$OUTPUT_DIR/subs/all_subs.txt"
 
 # massdns for fast bulk resolution
-massdns -r resolvers.txt -t A -o S "$OUTPUT_DIR/subs/all_subs.txt" > "$OUTPUT_DIR/subs/resolved.txt"
+massdns -r $WORDLISTS_DIR/resolvers.txt -t A -o S "$OUTPUT_DIR/subs/all_subs.txt" > "$OUTPUT_DIR/subs/resolved.txt"
  
 # Extract just the live hostnames
 grep " A " "$OUTPUT_DIR/subs/resolved.txt" | awk '{print $1}' | sed 's/\.$//' | sort -u > "$OUTPUT_DIR/subs/live_subs.txt"
  
 # puredns as an alternative (handles wildcard filtering)
-puredns resolve "$OUTPUT_DIR/subs/all_subs.txt" -r resolvers.txt -w "$OUTPUT_DIR/subs/live_subs.txt"
+puredns resolve "$OUTPUT_DIR/subs/all_subs.txt" -r $WORDLISTS_DIR/resolvers.txt -w "$OUTPUT_DIR/subs/live_subs.txt"
 
 # httpx probes multiple ports by default and returns rich metadata
 httpx -l "$OUTPUT_DIR/subs/live_subs.txt" \
